@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% block title %}
+<title>Home page </title>
+{% endblock %}
+
+{% block content  %}
+
+
+
+
+
+
+<ul>
+{% for post in object_list %}
+   <li> <a href= "{% url  'detail_view' post.pk %}">{{post.title}}</a> - {{post.author}} - 
+    <a href="{% url 'category_sort' post.category %}">{{post.category}}</a>
+
+    {%if user.id == post.author.id%}
+        -<a href="{% url 'update_post' post.pk %}"> (Edit)</a>
+        - <a href="{%url 'delete_post' post.pk%}">(Delete)</a><br>
+    {%endif%}
+
+    {{post.body|slice:"0:200"}}
+    <br>
+    <br></li>
+{%endfor%} 
+</ul>
+
+
+
+{% endblock %}

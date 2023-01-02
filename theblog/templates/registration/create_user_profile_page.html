@@ -1,0 +1,23 @@
+
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+<title> Create profil</title>
+{% endblock %}
+
+
+{% block content  %}
+
+<div class="form-group">
+
+    <form method="POST" enctype="multipart/form-data">create profile
+        {% csrf_token %}
+        {{form.as_p}}
+        
+        <button type="submit" class="btn btn-secondary">create</button>
+    </form>
+    </div>
+
+    {% endblock %}
+ 

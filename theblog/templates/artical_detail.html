@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}
+<title> {{post.title}} </title>
+{% endblock %}
+
+
+{% block content  %}
+<h1>{{post.title}}</h1>
+
+<small>By:
+    {% if post.author.frist_name %} 
+        {{ post.author.first_name }} 
+        {{ post.author.last_name }} 
+    {% else %}
+        {{post.author}},
+    {% endif %}
+        {{post.date_created}}
+
+    {% if post.author.profile %}
+
+        Visit:<a href="{% url 'user_profile' post.author.profile.id %}">Profile Page</a>
+ 
+    {% endif %}
+   
+<br>
+Category-<a href="{% url 'category_sort' post.category %}">{{post.category}}</a>
+
+{%if user.id == post.author.id%}
+        -<a href="{% url 'update_post' post.pk %}"> (Edit)</a>
+        - <a href="{%url 'delete_post' post.pk%}">(Delete)</a>
+{%endif%}
+</small> 
+
+{% if post.post_image %}
+    <br><img src="{{ post.post_image.url }}" class="img-fluid" width="350" height="200" >
+	{% endif %}
+<br>
+{{post.body}} <br>
+<a href="{% url 'home'%} ">Back</a>
+<br>
+<br>
+
+{% if liked %} 
+    <form action="{% url 'like_post' post.pk %}" method="POST">
+        {%csrf_token%}
+        <button type="submit", name="post_id", value="{{post.id}}"  >unlike</button>-{{total_likes}}
+
+{%else%}
+        
+    <form action="{% url 'like_post' post.pk %}" method="POST">
+        {%csrf_token%}
+        <button type="submit", name="post_id", value="{{post.id}}"  >like</button>-{{total_likes}}
+{%endif%}    
+
+
+<h2>Comments....</h2>
+<br><a href="{% url 'add_comment' post.pk %}">Add comment</a> <br>
+{% if not post.comments.all %}
+        no comments yet <a href="{% url 'add_comment' post.pk %}">Add comment</a>
+
+{%else%}
+        {% for comment in post.comments.all %}
+            <strong>{{comment.name}}</strong>-- <small>{{comment.date_created}}</small>  <br>
+            {{comment.body}} <br><br>
+        {%endfor%} <br>
+        <a href="{% url 'add_comment' post.pk %}">Add comment</a>
+
+{%endif%}
+</form>
+
+
+
+    {% endblock %}
