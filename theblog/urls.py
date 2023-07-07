@@ -1,7 +1,7 @@
 #from django.contrib import admin
 from django.urls import path,include
 
-from .views import commentview, homeview,artical_detailview,add_postview,upadte_post_view,delete_post_view,UserRegisterView,LikeView,commentview,edit_user_settings,Password_change_view,Create_ProfilePage_View,Show_ProfilePage_View,upadte_profile_view,categoryview
+from .views import commentview, homeview,artical_detailview,add_postview,upadte_post_view,delete_post_view,signup,LikeView,commentview,edit_user_settings,Password_change_view,Create_ProfilePage_View,Show_ProfilePage_View,upadte_profile_view,categoryview,activate,email_verification
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -18,6 +18,9 @@ urlpatterns = [
     path('user_profile/<int:pk>',Show_ProfilePage_View.as_view(),name='user_profile'),
     path('edit_profile/<int:pk>',upadte_profile_view.as_view(),name='edit_profile'),
     path('categorylist/<str:cat>',categoryview,name='category_sort'),
-    path('registrations',UserRegisterView.as_view(),name='register')
+    path('registrations',signup,name='register'),
+    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',  
+        activate, name='activate'), 
+    path('email', email_verification, name='send_email'),     
 
 ]

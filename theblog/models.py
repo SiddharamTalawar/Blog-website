@@ -55,6 +55,7 @@ class Profile(models.Model):
 	twitter_url = models.CharField(max_length=255, null=True, blank=True)
 	instagram_url = models.CharField(max_length=255, null=True, blank=True)
 	pinterest_url = models.CharField(max_length=255, null=True, blank=True)
+	email_verified = models.BooleanField(default=False)
 
 
 	def __str__(self):
